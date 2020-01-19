@@ -1,12 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-export default function Node({ x, y }) {
-    console.log([x, y])
+export default function Node(props) {
+    const {
+        col,
+        isFinish,
+        isStart,
+        isWall,
+        // onMouseDown,
+        // onMouseEnter,
+        // onMouseUp,
+        row,
+    } = props;
+
+    const extraClassName =
+        isFinish
+            ? 'node-finish'
+            : isStart
+                ? 'node-start'
+                : isWall
+                    ? 'node-wall'
+                    : '';
 
     return (
-        <div className="node">
-            {x}, {y}
+        <div
+            id={`node-${row}-${col}`}
+            className={`node ${extraClassName}`}>
+            {/* // onMouseDown={() => onMouseDown(row, col)}
+            // onMouseEnter={() => onMouseEnter(row, col)}
+            // onMouseUp={() => onMouseUp()}>  */}
+            {/* {col},{row} */}
+        </ div>
 
-        </div>
+
     )
 }
