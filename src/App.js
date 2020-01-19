@@ -9,7 +9,7 @@ const FINISH_NODE_ROW = 15;
 const FINISH_NODE_COL = 35;
 
 function App() {
-  const [state, setState] = useState({ grid: [] });
+  const [state, setState] = useState({ grid: [], mouseIsPressed: false });
 
   useEffect(() => {
     let grid = [];
@@ -32,6 +32,32 @@ function App() {
     setState({ grid: grid });
     console.log("Effect Grid:", grid);
   }, []);
+
+  const handleMouseDown = (row, col) => {
+    setState({
+      ...state,
+      mouseIsPressed: true,
+      grid: state.grid.map(r =>
+        r.map(node =>
+          node.row == row && node.col == col ? { ...node, isWall: true } : node
+        )
+      )
+    });
+  };
+
+  const handleMouseEnter = (row, col) => {
+    if (!state.mouseIsPressed) return;
+    setState({
+      ...state,
+      grid: state.grid.map(node =>
+        node.row == row && node.col == col ? { ...node, isWall: true } : node
+      )
+    });
+  };
+
+  const handleMouseUp = () => {
+    setState({ ...state, mouseIsPressed: false });
+  };
 
   const animateDijkstra = (visitedNodesInOrder, nodesInShortestPathOrder) => {
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
@@ -73,7 +99,13 @@ function App() {
       <button onClick={() => visualizeDijkstra()}>
         Visualize Dijkstra's Algorithm
       </button>
-      <Grid grid={state.grid} />
+      <Grid
+        grid={state.grid}
+        mouseIsPressed={state.mouseIsPressed}
+        handleMouseDown={handleMouseDown}
+        handleMouseEnter={handleMouseEnter}
+        handleMouseUp={handleMouseUp}
+      />
     </div>
   );
 }

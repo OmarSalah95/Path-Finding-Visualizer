@@ -6,9 +6,9 @@ export default function Node(props) {
         isFinish,
         isStart,
         isWall,
-        // onMouseDown,
-        // onMouseEnter,
-        // onMouseUp,
+        onMouseDown,
+        onMouseEnter,
+        onMouseUp,
         row,
     } = props;
 
@@ -21,13 +21,15 @@ export default function Node(props) {
                     ? 'node-wall'
                     : '';
 
+
     return (
         <div
             id={`node-${row}-${col}`}
-            className={`node ${extraClassName}`}>
-            {/* // onMouseDown={() => onMouseDown(row, col)}
-            // onMouseEnter={() => onMouseEnter(row, col)}
-            // onMouseUp={() => onMouseUp()}>  */}
+            className={`node ${extraClassName}`}
+            onMouseDown={() => onMouseDown(row, col)}
+            onMouseEnter={() => onMouseEnter(row, col)}
+            onMouseUp={() => onMouseUp()}
+        >
             {/* {col},{row} */}
         </ div>
 
