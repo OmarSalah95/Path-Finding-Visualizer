@@ -39,7 +39,9 @@ function App() {
       mouseIsPressed: true,
       grid: state.grid.map(r =>
         r.map(node =>
-          node.row == row && node.col == col ? { ...node, isWall: true } : node
+          node.row === row && node.col === col
+            ? { ...node, isWall: true }
+            : node
         )
       )
     });
@@ -47,12 +49,7 @@ function App() {
 
   const handleMouseEnter = (row, col) => {
     if (!state.mouseIsPressed) return;
-    setState({
-      ...state,
-      grid: state.grid.map(node =>
-        node.row == row && node.col == col ? { ...node, isWall: true } : node
-      )
-    });
+    handleMouseDown(row, col);
   };
 
   const handleMouseUp = () => {

@@ -14,9 +14,10 @@ export default function Grid(props) {
         <div className="grid">
 
             {grid.map((r, y) =>
-                r.map(node => {
+                r.map((node, i) => {
                     const { row, col, isFinish, isStart, isWall } = node;
                     return <Node
+                        key={row + i}
                         col={col}
                         isFinish={isFinish}
                         isStart={isStart}
