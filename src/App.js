@@ -8,7 +8,7 @@ function App() {
     grid: [],
     mouseIsPressed: false,
     startNode: [15, 10],
-    endNode: [15, 35]
+    endNode: [15, 40]
   });
 
   useEffect(() => {
@@ -29,6 +29,7 @@ function App() {
       }
       grid.push(currentRow);
     }
+    // console.log(grid);
     setState({ ...state, grid: grid });
   }, []);
 
@@ -60,7 +61,7 @@ function App() {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
           animateShortestPath(nodesInShortestPathOrder);
-        }, 10 * i);
+        }, 10.5 * i);
         return;
       }
       setTimeout(() => {
@@ -77,18 +78,18 @@ function App() {
         const node = nodesInShortestPathOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node node-shortest-path";
-      }, 15 * i);
+      }, 10 * i);
     }
   };
 
   const visualizeDijkstra = () => {
     const { grid, startNode, endNode } = state;
-    console.log("State :", state);
     const head = grid[startNode[0]][startNode[1]];
     const finishNode = grid[endNode[0]][endNode[1]];
     const visitedNodesInOrder = dijkstra(grid, head, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+    console.log(state);
   };
   return (
     <div className="App">

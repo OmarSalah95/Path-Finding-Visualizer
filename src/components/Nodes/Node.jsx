@@ -30,7 +30,8 @@ export default function Node(props) {
             onMouseEnter={() => onMouseEnter(row, col)}
             onMouseUp={() => onMouseUp()}
         >
-            {/* {col},{row} */}
+            <h2>{isStart ? ">>" : isFinish ? "X" : ""}</h2>
+
         </ div>
 
 
