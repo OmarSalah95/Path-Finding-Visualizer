@@ -3,13 +3,13 @@ import { dijkstra, getNodesInShortestPathOrder } from "./Algorithms/Dijkstra";
 import "./App.css";
 import Grid from "./components/Grid/Grid";
 
-const START_NODE_ROW = 15;
-const START_NODE_COL = 10;
-const FINISH_NODE_ROW = 15;
-const FINISH_NODE_COL = 35;
-
 function App() {
-  const [state, setState] = useState({ grid: [], mouseIsPressed: false });
+  const [state, setState] = useState({
+    grid: [],
+    mouseIsPressed: false,
+    startNode: [15, 10],
+    endNode: [15, 35]
+  });
 
   useEffect(() => {
     let grid = [];
@@ -19,8 +19,8 @@ function App() {
         currentRow.push({
           col: col,
           row: row,
-          isStart: row === START_NODE_ROW && col === START_NODE_COL,
-          isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+          isStart: row === state.startNode[0] && col === state.startNode[1],
+          isFinish: row === state.endNode[0] && col === state.endNode[1],
           distance: Infinity,
           isVisited: false,
           isWall: false,
@@ -29,8 +29,7 @@ function App() {
       }
       grid.push(currentRow);
     }
-    setState({ grid: grid });
-    console.log("Effect Grid:", grid);
+    setState({ ...state, grid: grid });
   }, []);
 
   const handleMouseDown = (row, col) => {
@@ -40,7 +39,7 @@ function App() {
       grid: state.grid.map(r =>
         r.map(node =>
           node.row === row && node.col === col
-            ? { ...node, isWall: true }
+            ? { ...node, isWall: !node.isWall }
             : node
         )
       )
@@ -83,19 +82,20 @@ function App() {
   };
 
   const visualizeDijkstra = () => {
-    const { grid } = state;
-    const startNode = grid[START_NODE_ROW][START_NODE_COL];
-    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+    const { grid, startNode, endNode } = state;
+    console.log("State :", state);
+    const head = grid[startNode[0]][startNode[1]];
+    const finishNode = grid[endNode[0]][endNode[1]];
+    const visitedNodesInOrder = dijkstra(grid, head, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
   };
-
   return (
     <div className="App">
       <button onClick={() => visualizeDijkstra()}>
         Visualize Dijkstra's Algorithm
       </button>
+      <input type="text" />
       <Grid
         grid={state.grid}
         mouseIsPressed={state.mouseIsPressed}
