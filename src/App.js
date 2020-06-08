@@ -8,7 +8,7 @@ function App() {
     grid: [],
     mouseIsPressed: false,
     startNode: [15, 10],
-    endNode: [15, 40]
+    endNode: [15, 40],
   });
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function App() {
           distance: Infinity,
           isVisited: false,
           isWall: false,
-          previousNode: null
+          previousNode: null,
         });
       }
       grid.push(currentRow);
@@ -37,13 +37,13 @@ function App() {
     setState({
       ...state,
       mouseIsPressed: true,
-      grid: state.grid.map(r =>
-        r.map(node =>
+      grid: state.grid.map((r) =>
+        r.map((node) =>
           node.row === row && node.col === col
             ? { ...node, isWall: !node.isWall }
             : node
         )
-      )
+      ),
     });
   };
 
@@ -72,7 +72,7 @@ function App() {
     }
   };
 
-  const animateShortestPath = nodesInShortestPathOrder => {
+  const animateShortestPath = (nodesInShortestPathOrder) => {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
